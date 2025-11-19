@@ -17,8 +17,8 @@ def plot_histogram(data):
         raise ImportError("matplotlib is not installed. Cannot plot histogram.")
     
     data = np.asarray(data)
-    mean = stats.calculate_mean(data)
-    median = stats.calculate_median(data)
+    mean = np.mean(data)
+    median = np.median(data)
     plt.figure(figsize=(10, 6))
     counts, bin_edges, patches = plt.hist(data, bins=20, alpha=0.7, color='blue', edgecolor='black')
     bin_centers = 0.5 * (bin_edges[:-1] + bin_edges[1:])

@@ -24,7 +24,6 @@
 ##
 
 import numpy as np
-import graphics as gfx
 
 def calculate_mean(data):
     """Calculate the mean of the data."""
@@ -52,15 +51,4 @@ def print_statistics(data):
     print(f"Median: {median:.2f}")
     print(f"Standard Deviation: {std:.2f}")
     return mean, median, std
-
-import random
-
-if __name__ == "__main__":
-    # Example usage with random data
-    sample_data = [random.randint(1, 10) for _ in range(20)]
-    print_statistics(sample_data)
-    try:
-        gfx.plot_histogram(sample_data)
-    except ImportError as e:
-        print(e)
 
