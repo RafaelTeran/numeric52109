@@ -27,6 +27,9 @@
 
 import math
 
+
+# We are going to define basic operations as functions
+
 def add(a, b):
     """Add two numbers."""
     return a + b
@@ -59,15 +62,15 @@ def tangent(a):
     """Calculate the tangent of a number (in radians)."""
     return math.tan(a)
 
-def exponential(a):
-    """Calculate the exponential of a number."""
-    return math.exp(a)
+# We now define the interface function, which will prompt the user for input
+# and call the appropriate function based on the user's input,
+# while handling exceptions.
 
 def calculator_interface():
     """Interface for a basic calculator."""
     print("Welcome to the basic calculator!")
     print("Available operations: add, subtract, multiply, divide," \
-    "cosine, sine, logarithm, tangent, exponential")
+    " cosine, sine, logarithm, tangent")
     
     while True:
         print("Type 'exit' to quit the calculator.")
@@ -75,11 +78,21 @@ def calculator_interface():
         if operation == 'exit':
             print("Exiting the calculator. Goodbye!")
             break
-        
         try:
-            a = float(input("Enter first number: "))
-            b = float(input("Enter second number: "))
+            # We handle operations with different numbers of arguments
+            if operation in ['cosine', 'sine', 'tangent']:
+                a = float(input("Enter number (in radians): "))
+                b = None
+            elif operation == 'logarithm':
+                a = float(input("Enter number: "))
+                base_input = input("Enter base (default is 10): ").strip()
+                b = float(base_input) if base_input else 10
+            else:
+                a = float(input("Enter first number: "))
+                b = float(input("Enter second number: "))
             if operation == 'add':
+                a = float(input("Enter first number: "))
+                b = float(input("Enter second number: "))
                 result = add(a, b)
             elif operation == 'subtract':
                 result = subtract(a, b)
@@ -90,11 +103,16 @@ def calculator_interface():
             else:
                 print("Invalid operation. Please try again.")
                 print("Available operations: add, subtract, multiply, divide," \
-                "cosine, sine, logarithm, tangent, exponential")
+                "cosine, sine, logarithm, tangent")
                 continue
             
-            print(f"The result of {operation}ing {a} and {b} is: {result}")
-        
+            if operation in ['cosine', 'sine', 'tangent']:
+                print(f"The result of {operation}({a}) is: {result}")
+            elif operation == 'logarithm':
+                print(f"The result of {operation}({a}, base={b}) is: {result}")
+            else:
+                print(f"The result of {operation}ing {a} and {b} is: {result}")
+
         except ValueError:
             print("Invalid input. Please enter numeric values.")
         except ZeroDivisionError:

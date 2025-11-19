@@ -3,7 +3,6 @@
 ## Basic graphics for statistics
 ###
 
-import statistics as stats
 import numpy as np
 
 try:
@@ -11,29 +10,38 @@ try:
 except ImportError:
     plt = None
 
-def plot_histogram(data):
+def plot_histogram(data, a, b):
     """Plot a histogram of the data with mean and median marked."""
     if plt is None:
         raise ImportError("matplotlib is not installed. Cannot plot histogram.")
     
     data = np.asarray(data)
-    mean = np.mean(data)
+    mean = data.mean()
     median = np.median(data)
-    plt.figure(figsize=(10, 6))
-    counts, bin_edges, patches = plt.hist(data, bins=20, alpha=0.7, color='blue', edgecolor='black')
-    bin_centers = 0.5 * (bin_edges[:-1] + bin_edges[1:])
 
-    plt.axvline(mean, color='red', linestyle='dashed', linewidth=1,
-                  label='Mean')
-    plt.axvline(median, color='green', linestyle='dashed',
-                  linewidth=1, label='Median')
-    
-    visible_centers = bin_centers[counts > 0]
-    tick_labels = [str(int(round(c))) for c in visible_centers]
-    plt.xticks(visible_centers, tick_labels) 
-    plt.xlim(1, 10) 
-    plt.title('Histogram with Mean and Median')
+    mn, mx = data.min(), data.max()
+
+    bins = np.arange(mn - 0.5, mx + 0.5 + 1, 1)
+
+    plt.figure(figsize=(8, 4))
+    counts, edges, patches = plt.hist(
+        data,
+        bins=bins,
+        edgecolor='black',
+        alpha=0.7,
+        align='mid'
+    )
+
+    plt.axvline(mean, color='red', linestyle='--', linewidth=1,
+                label=f"Mean: {mean:.2f}")
+    plt.axvline(median, color='green', linestyle='--', linewidth=1,
+                label=f"Median: {median:.2f}")
+    # Mark the x-axis ticks
+    plt.xticks(np.arange(mn, mx + 1))
+    # This ensures the x-axis limits are set according to provided a and b
+    plt.xlim(a - 0.5, b + 0.5)
     plt.xlabel('Value')
     plt.ylabel('Frequency')
+    plt.title('Histogram of Data')
     plt.legend()
     plt.show()

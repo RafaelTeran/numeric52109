@@ -25,6 +25,7 @@
 
 import numpy as np
 
+# We now define the functions for statistics
 def calculate_mean(data):
     """Calculate the mean of the data."""
     data = np.asarray(data)
@@ -40,6 +41,7 @@ def calculate_std(data):
     data = np.asarray(data)
     return np.std(data)
 
+# This function prints the statistics in a clear format
 def print_statistics(data):
     """Calculate and pretty print the mean, median, and standard deviation."""
     mean = calculate_mean(data)
