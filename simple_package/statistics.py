@@ -22,3 +22,45 @@
 ## 5) Also, do something and/or throw an exception/message if the
 ##    numpy and matplotlib packages are not installed.
 ##
+
+import numpy as np
+import graphics as gfx
+
+def calculate_mean(data):
+    """Calculate the mean of the data."""
+    data = np.asarray(data)
+    return np.mean(data)
+
+def calculate_median(data):
+    """Calculate the median of the data."""
+    data = np.asarray(data)
+    return np.median(data)
+
+def calculate_std(data):
+    """Calculate the standard deviation of the data."""
+    data = np.asarray(data)
+    return np.std(data)
+
+def print_statistics(data):
+    """Calculate and pretty print the mean, median, and standard deviation."""
+    mean = calculate_mean(data)
+    median = calculate_median(data)
+    std = calculate_std(data)
+    
+    print(f"Statistics Summary:")
+    print(f"Mean: {mean:.2f}")
+    print(f"Median: {median:.2f}")
+    print(f"Standard Deviation: {std:.2f}")
+    return mean, median, std
+
+import random
+
+if __name__ == "__main__":
+    # Example usage with random data
+    sample_data = [random.randint(1, 10) for _ in range(20)]
+    print_statistics(sample_data)
+    try:
+        gfx.plot_histogram(sample_data)
+    except ImportError as e:
+        print(e)
+
