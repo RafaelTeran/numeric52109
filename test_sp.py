@@ -7,6 +7,7 @@ import simple_package.statistics as sp_stats
 import simple_package.graphics as sp_gfx
 import random
 import sys
+import time
 
 # This is a simple test script to demonstrate the functionalities
 # of the simple_package. It allows the user to choose between
@@ -20,14 +21,20 @@ def safe_input(prompt):
         sys.exit(0)
     return text
 
+def slow_print(text, delay=0.2):
+    for char in text:
+        sys.stdout.write(char)
+        sys.stdout.flush() # Fuerza la salida a la terminal inmediatamente
+        time.sleep(delay)
+
 # Main test loop
 if __name__ == "__main__":
     print("Hello! Welcome to the simple_package test script.")
     print("This package has two main functionalities: operations and statistics.")
     print("Operations include basic arithmetic calculations.")
     print("Statistics include calculating mean, median, and plotting histograms.")
+    print("##########################    START OF THE TEST   ##########################")
     while True:
-        print("##########################   START OF THE TEST  ##########################")
         print("Type 'exit' at any moment to quit the test.")
         choice = safe_input("Enter 'ops' for operations or 'stats' for statistics: ")
         # Handle statistics choice
@@ -43,7 +50,9 @@ if __name__ == "__main__":
                     mu = float(safe_input("Enter the mean (mu): "))
                     sigma = float(safe_input("Enter the standard deviation (sigma): "))
                 else:
-                    print("Invalid distribution type. Please enter 'uniform' or 'normal'.")
+                    print("Invalid distribution type. Please enter 'uniform' or 'normal'.\nRestarting the test")
+                    slow_print ("##########################", delay=0.2)
+                    print("   RESTART OF THE TEST  ##########################")
                     continue
 
                 if distribution == 'uniform':
@@ -55,10 +64,16 @@ if __name__ == "__main__":
                 try:
                     sp_gfx.plot_histogram(sample_data, a = min(sample_data), b = max(sample_data))
                 except ImportError as e:
-                    print(e)
+                    print(e,"\nRestarting the test")
+                    slow_print ("##########################", delay=0.2)
+                    print("   RESTART OF THE TEST  ##########################")
             except ValueError:
-                print("Invalid input. Please enter numeric values where required.")
+                print("Invalid input. Please enter numeric values where required.\nRestarting the test")
+                slow_print ("##########################", delay=0.2)
+                print("   RESTART OF THE TEST  ##########################")
         elif choice == 'ops':
             sp_ops.calculator_interface()
         else:
-            print("Invalid choice. Please run the script again and choose 'ops' or 'stats'.")
+            print("Invalid choice. Please run the script again and choose 'ops' or 'stats'.\nRestarting the test")
+            slow_print ("##########################", delay=0.2)
+            print("   RESTART OF THE TEST  ##########################")
